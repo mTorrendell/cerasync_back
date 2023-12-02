@@ -34,7 +34,7 @@ public class Event {
     @Lob
     private byte[] imageData;
 
-    @OneToMany(mappedBy = "subscribedEvent")
+    @OneToMany(mappedBy = "event")
     private List<EventSubscriber> subscribers;
     
     @ManyToOne @JoinColumn(name = "owner_id")

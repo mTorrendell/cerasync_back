@@ -17,10 +17,10 @@ import lombok.NoArgsConstructor;
 public class EventSubscriber {
     
     @Id @GeneratedValue
-    private Integer id;
+    private Long id;
 
     private String email;
 
     @ManyToOne @JoinColumn(name = "event_id")
-    private Event subscribedEvent;
+    private Event event;
 }
