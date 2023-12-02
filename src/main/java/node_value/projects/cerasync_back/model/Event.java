@@ -1,6 +1,7 @@
 package node_value.projects.cerasync_back.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,8 +10,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,6 +33,9 @@ public class Event {
 
     @Lob
     private byte[] imageData;
+
+    @OneToMany(mappedBy = "subscribedEvent")
+    private List<EventSubscriber> subscribers;
     
     @ManyToOne @JoinColumn(name = "owner_id")
     private User owner;
