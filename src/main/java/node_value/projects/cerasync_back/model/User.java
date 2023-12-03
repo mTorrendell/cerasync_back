@@ -1,6 +1,5 @@
 package node_value.projects.cerasync_back.model;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
