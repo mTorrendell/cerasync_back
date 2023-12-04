@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import node_value.projects.cerasync_back.model.Event;
 import node_value.projects.cerasync_back.model.User;
 import node_value.projects.cerasync_back.repository.EventRepository;
+import node_value.projects.cerasync_back.repository.UserRepository;
 import node_value.projects.cerasync_back.util.dto.DTOtoObj;
 import node_value.projects.cerasync_back.util.dto.reqDTO.EventDTO;
 import node_value.projects.cerasync_back.util.dto.respDTO.AllEventsResponse;
@@ -19,6 +20,7 @@ import node_value.projects.cerasync_back.util.exceptions.EventNotFoundException;
 public class EventService {
 
     @Autowired EventRepository repo;
+    @Autowired UserRepository  userRepo;
 
     public AllEventsResponse getAllEvents() {
         return AllEventsResponse.builder().events(repo.findAll()).build();
@@ -30,7 +32,7 @@ public class EventService {
         ).build();
     }
 
-    public EventResponse addEvent(EventDTO eventDTO, User owner) throws EventAlreadyExistsException {
+    public EventResponse addEvent(EventDTO eventDTO, String email) throws EventAlreadyExistsException {
         if (repo.existsByTitle(eventDTO.getTitle()))
             throw new EventAlreadyExistsException(
                 "Event with title: " + System.lineSeparator() + 
@@ -38,7 +40,7 @@ public class EventService {
                 "already exists, please use another one");
     
         Event event = DTOtoObj.EventDTOtoEvent(eventDTO); 
-        event.setOwner(owner);
+        event.setOwner(userRepo.findByEmail(email).get());
         repo.save(event);
         return EventResponse.builder().event(event).build();
     }

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import node_value.projects.cerasync_back.model.User;
 import node_value.projects.cerasync_back.service.EventService;
 import node_value.projects.cerasync_back.util.dto.reqDTO.EventDTO;
 import node_value.projects.cerasync_back.util.dto.respDTO.AllEventsResponse;
@@ -42,9 +41,8 @@ public class EventController {
 
     @PostMapping("/add_event")
     public ResponseEntity<?> addEvent(@Validated @RequestBody EventDTO dto, Principal principal) {
-        User user = (User) principal;
         try {
-            return ResponseEntity.ok(eventService.addEvent(dto, user));
+            return ResponseEntity.ok(eventService.addEvent(dto, principal.getName()));
         } catch (EventAlreadyExistsException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

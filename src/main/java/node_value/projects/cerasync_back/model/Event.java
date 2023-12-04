@@ -3,6 +3,8 @@ package node_value.projects.cerasync_back.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,9 +36,11 @@ public class Event {
     //@Lob
     private String imageData;
 
+    @JsonIgnore 
     @OneToMany(mappedBy = "event")
     private List<EventSubscriber> subscribers;
     
+    @JsonIgnore
     @ManyToOne @JoinColumn(name = "owner_id")
     private User owner;
 
