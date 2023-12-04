@@ -20,7 +20,8 @@ public class DTOtoObj {
             .email(    dto.getEmail())
             .password( pswEncoder.encode(dto.getPassword()))
             .role(     Role.USER)
-            .events(   new ArrayList<>()).build();
+            .events(   new ArrayList<>())
+            .build();
         
     }
 
@@ -33,6 +34,7 @@ public class DTOtoObj {
             .shorDescription(dto.getShortDesc())
             .fullDescription(dto.getFullDesc())
             .imageData(      dto.getImageData())
+            .subscribers(    new ArrayList<>())
             .build();    
     }
 }
