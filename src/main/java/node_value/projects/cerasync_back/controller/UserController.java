@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import node_value.projects.cerasync_back.service.UserService;
-import node_value.projects.cerasync_back.util.dto.EmailCheckDTO;
-import node_value.projects.cerasync_back.util.dto.EmailCheckResponse;
-import node_value.projects.cerasync_back.util.dto.UserDTO;
+import node_value.projects.cerasync_back.util.dto.reqDTO.EmailCheckDTO;
+import node_value.projects.cerasync_back.util.dto.reqDTO.UserDTO;
+import node_value.projects.cerasync_back.util.dto.respDTO.EmailCheckResponse;
 import node_value.projects.cerasync_back.util.exceptions.UserExistsException;
 import node_value.projects.cerasync_back.util.exceptions.UserNotFoundException;
 

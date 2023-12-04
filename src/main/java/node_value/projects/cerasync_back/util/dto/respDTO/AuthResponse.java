@@ -1,4 +1,4 @@
-package node_value.projects.cerasync_back.util.dto;
+package node_value.projects.cerasync_back.util.dto.respDTO;
 
 import lombok.Builder;
 import lombok.Data;

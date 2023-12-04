@@ -39,4 +39,5 @@ public class Event {
     
     @ManyToOne @JoinColumn(name = "owner_id")
     private User owner;
+
 }

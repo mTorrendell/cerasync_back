@@ -21,7 +21,7 @@ import io.jsonwebtoken.security.Keys;
 public class JwtService {
     
     @Value("${jwt.signing.key}")
-    private static String KEY;
+    private String KEY;
     
     public String generateToken(UserDetails uD) {
         return generateToken(new HashMap<>(), uD);
