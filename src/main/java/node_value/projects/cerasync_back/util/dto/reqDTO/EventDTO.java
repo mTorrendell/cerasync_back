@@ -11,7 +11,6 @@ import lombok.NonNull;
 @Data @Builder
 public class EventDTO {
     @Nullable Long         id;
-    @NonNull String        title, location, host, shortDesc, fullDesc;
+    @NonNull String        title, location, host, shortDesc, fullDesc, imageData;
     @NonNull LocalDateTime dateTime;
-    @NonNull byte[]        imageData;
 }

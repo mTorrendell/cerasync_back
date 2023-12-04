@@ -31,8 +31,8 @@ public class Event {
 
     private LocalDateTime dateTime;
 
-    @Lob
-    private byte[] imageData;
+    //@Lob
+    private String imageData;
 
     @OneToMany(mappedBy = "event")
     private List<EventSubscriber> subscribers;
