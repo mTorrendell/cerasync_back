@@ -5,6 +5,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import node_value.projects.cerasync_back.model.User;
@@ -23,18 +24,13 @@ public class UserService {
     @Autowired private UserRepository        repo;
     @Autowired private JwtService            jwtSevice;
     @Autowired private AuthenticationManager authManager;
+    @Autowired private PasswordEncoder       pswEncoder;
 
     public AuthResponse register(UserDTO req) throws UserExistsException {
         if (repo.existsByEmail(req.getEmail())) throw new UserExistsException(req.getEmail());
         
+        req.setPassword(pswEncoder.encode(req.getPassword()));
         User user = DTOtoObj.UserDTOtoUser(req);
-        /* 
-        User.builder()
-            .email(    req.getEmail())
-            .password( pswEncoder.encode(req.getPassword()))
-            .role(     Role.USER)
-            .events(   new ArrayList<>()).build();
-        */
         repo.save(user);
         return AuthResponse.builder().token(jwtSevice.generateToken(user)).build();
     }

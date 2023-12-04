@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import node_value.projects.cerasync_back.model.Event;
-import node_value.projects.cerasync_back.model.User;
 import node_value.projects.cerasync_back.repository.EventRepository;
 import node_value.projects.cerasync_back.repository.UserRepository;
 import node_value.projects.cerasync_back.util.dto.DTOtoObj;
