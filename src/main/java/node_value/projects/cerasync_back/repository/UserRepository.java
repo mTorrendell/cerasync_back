@@ -6,7 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import node_value.projects.cerasync_back.model.User;
 
+
 public interface UserRepository extends JpaRepository<User, Integer> {
     Optional<User> findByEmail(String email);
+    Optional<User> findById(Integer id);
     boolean        existsByEmail(String email);
 }

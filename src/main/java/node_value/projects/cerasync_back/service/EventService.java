@@ -6,14 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import node_value.projects.cerasync_back.model.Event;
+import node_value.projects.cerasync_back.model.User;
 import node_value.projects.cerasync_back.repository.EventRepository;
 import node_value.projects.cerasync_back.repository.UserRepository;
 import node_value.projects.cerasync_back.util.dto.DTOtoObj;
 import node_value.projects.cerasync_back.util.dto.reqDTO.EventDTO;
 import node_value.projects.cerasync_back.util.dto.respDTO.AllEventsResponse;
 import node_value.projects.cerasync_back.util.dto.respDTO.EventResponse;
+import node_value.projects.cerasync_back.util.dto.respDTO.UserEventsResponse;
 import node_value.projects.cerasync_back.util.exceptions.EventAlreadyExistsException;
 import node_value.projects.cerasync_back.util.exceptions.EventNotFoundException;
+import node_value.projects.cerasync_back.util.exceptions.UserNotFoundException;
 
 @Service
 public class EventService {
@@ -31,6 +34,13 @@ public class EventService {
         ).build();
     }
 
+    public UserEventsResponse getEventByUserId(Integer id) throws UserNotFoundException {
+        User user = userRepo.findById(id).orElseThrow(
+            () -> new UserNotFoundException("Unable to find user by id " + id));
+        
+        return UserEventsResponse.builder().id(id).events(repo.findByOwner(user)).build();
+    }
+
     public EventResponse addEvent(EventDTO eventDTO, String email) throws EventAlreadyExistsException {
         if (repo.existsByTitle(eventDTO.getTitle()))
             throw new EventAlreadyExistsException(
@@ -46,7 +56,7 @@ public class EventService {
 
     public void updateEvent(EventDTO eventDTO) throws EventNotFoundException, NullPointerException {
         if (eventDTO.getId() == null) 
-            throw new NullPointerException("Field if of eventDTO instance is null");
+            throw new NullPointerException("Field id of eventDTO instance is null");
         Optional<Event> eOp = repo.findById(eventDTO.getId());
         if (eOp.isPresent()) {
             Event e = eOp.get();
