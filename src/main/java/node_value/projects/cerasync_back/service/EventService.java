@@ -1,9 +1,11 @@
 package node_value.projects.cerasync_back.service;
 
 import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import node_value.projects.cerasync_back.model.Event;
 import node_value.projects.cerasync_back.model.User;
@@ -28,17 +30,22 @@ public class EventService {
         return AllEventsResponse.builder().events(repo.findAll()).build();
     }
 
+
     public EventResponse getEventById(Long id) throws EventNotFoundException {
         return EventResponse.builder().event(
             repo.findById(id).orElseThrow(() -> new EventNotFoundException("Event with id " + id + " not found"))
         ).build();
     }
 
+    @Transactional
     public UserEventsResponse getEventByUserId(Integer id) throws UserNotFoundException {
         User user = userRepo.findById(id).orElseThrow(
             () -> new UserNotFoundException("Unable to find user by id " + id));
         
-        return UserEventsResponse.builder().id(id).events(user.getEvents()).build();
+        System.out.println(user.toString());
+        List<Event> events = user.getEvents();
+        System.out.println(user.getEvents());
+        return UserEventsResponse.builder().id(id).events(events).build();
     }
 
     public EventResponse addEvent(EventDTO eventDTO, String email) throws EventAlreadyExistsException {
