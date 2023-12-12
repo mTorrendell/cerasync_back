@@ -38,7 +38,7 @@ public class EventService {
         User user = userRepo.findById(id).orElseThrow(
             () -> new UserNotFoundException("Unable to find user by id " + id));
         
-        return UserEventsResponse.builder().id(id).events(repo.findByOwner(user)).build();
+        return UserEventsResponse.builder().id(id).events(user.getEvents()).build();
     }
 
     public EventResponse addEvent(EventDTO eventDTO, String email) throws EventAlreadyExistsException {
