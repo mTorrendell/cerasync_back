@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import node_value.projects.cerasync_back.model.Event;
 import node_value.projects.cerasync_back.model.User;
@@ -37,14 +36,12 @@ public class EventService {
         ).build();
     }
 
-    @Transactional
     public UserEventsResponse getEventByUserId(Integer id) throws UserNotFoundException {
         User user = userRepo.findById(id).orElseThrow(
             () -> new UserNotFoundException("Unable to find user by id " + id));
+     
+        List<Event> events = repo.findByOwner(user);
         
-        System.out.println(user.toString());
-        List<Event> events = user.getEvents();
-        System.out.println(user.getEvents());
         return UserEventsResponse.builder().id(id).events(events).build();
     }
 
