@@ -40,7 +40,9 @@ public class EventService {
         User user = userRepo.findById(id).orElseThrow(
             () -> new UserNotFoundException("Unable to find user by id " + id));
      
-        List<Event> events = repo.findByOwner(user);
+        List<Event> events = repo.findAll();
+
+        events.stream().filter(event -> event.getOwner().equals(user));
         
         return UserEventsResponse.builder().id(id).events(events).build();
     }
