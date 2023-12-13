@@ -42,9 +42,9 @@ public class EventService {
      
         List<Event> events = repo.findAll();
 
-        events.stream().filter(event -> event.getOwner().equals(user));
+        List<Event> filtered = events.stream().filter(event -> event.getOwner().getId().equals(user.getId())).toList();
         
-        return UserEventsResponse.builder().id(id).events(events).build();
+        return UserEventsResponse.builder().id(id).events(filtered).build();
     }
 
     public EventResponse addEvent(EventDTO eventDTO, String email) throws EventAlreadyExistsException {
@@ -62,7 +62,7 @@ public class EventService {
 
     public void updateEvent(EventDTO eventDTO) throws EventNotFoundException, NullPointerException {
         if (eventDTO.getId() == null) 
-            throw new NullPointerException("Field id of eventDTO instance is null");
+            throw new NullPointerException("Field 'id' of eventDTO instance is null");
         Optional<Event> eOp = repo.findById(eventDTO.getId());
         if (eOp.isPresent()) {
             Event e = eOp.get();
