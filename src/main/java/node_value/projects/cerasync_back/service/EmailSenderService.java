@@ -1,9 +1,9 @@
 package node_value.projects.cerasync_back.service;
 
-import java.io.File;
+import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -27,7 +27,10 @@ public class EmailSenderService  {
         mailSender.send(msg);
     }
 
-    public void sendMsgWithAttachment(String to, String subject, String text, String pathToAttachment) throws MessagingException {
+    public void sendMsgWithAttachment(
+            String to, String subject, String text, String pathToAttachment) 
+                throws MessagingException, IOException {
+                    
         MimeMessage msg = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(msg, true);
         
@@ -36,8 +39,9 @@ public class EmailSenderService  {
         helper.setSubject(subject);
         helper.setText(text);
 
-        FileSystemResource file = new FileSystemResource(new File(pathToAttachment));
-        helper.addAttachment("Newsletter", file);
+        ClassPathResource file = new ClassPathResource(pathToAttachment);
+      
+        helper.addAttachment("CeraSync_Magazine_Edition_1.pdf", file);
 
         mailSender.send(msg);
     }
