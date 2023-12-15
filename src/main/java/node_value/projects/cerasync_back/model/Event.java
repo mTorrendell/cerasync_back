@@ -30,7 +30,10 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "event_seq")
     private Long id;
 
-    private String title, location, host, shorDescription, fullDescription;
+    private String title, location, host, shorDescription;
+    
+    @Column(length = 1024)
+    private String fullDescription;
 
     private LocalDateTime dateTime;
 
