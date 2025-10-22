@@ -32,19 +32,19 @@ public class UserService {
         req.setPassword(pswEncoder.encode(req.getPassword()));
         User user = DTOtoObj.UserDTOtoUser(req);
         repo.save(user);
-        return AuthResponse.builder().token(jwtSevice.generateToken(user)).build();
+        return AuthResponse.builder().token(jwtSevice.generateToken(user)).id(user.getId()).build();
     }
 
     public AuthResponse authenticate(UserDTO req) throws BadCredentialsException, UserNotFoundException {
         try {
             authManager.authenticate(new UsernamePasswordAuthenticationToken(req.getEmail(), req.getPassword()));
         } catch (AuthenticationException e) {
-            throw new BadCredentialsException("Unable to authenticate, nvalid credentials", e);
+            throw new BadCredentialsException("Unable to authenticate, invalid credentials", e);
         }
         User user = repo.findByEmail(req.getEmail()).orElseThrow(
             () -> new UserNotFoundException("Unable to authentiacate, user not found"));
         
-        return AuthResponse.builder().token(jwtSevice.generateToken(user)).build();
+        return AuthResponse.builder().token(jwtSevice.generateToken(user)).id(user.getId()).build();
     }
 
     public EmailCheckResponse isUserExists(EmailCheckDTO req) {

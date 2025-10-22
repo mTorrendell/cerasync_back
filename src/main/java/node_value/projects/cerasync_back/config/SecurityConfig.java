@@ -43,7 +43,7 @@ public class SecurityConfig {
 
     @Bean SecurityFilterChain SecurityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(
-            aRs -> aRs.requestMatchers("/api/auth/**", "/api/events/public/**").permitAll()
+            aRs -> aRs.requestMatchers("/api/auth/**", "/api/events/public/**", "/api/email/**").permitAll()
                       .anyRequest().authenticated()
         ).sessionManagement(
             sM -> sM.sessionCreationPolicy(SessionCreationPolicy.STATELESS)

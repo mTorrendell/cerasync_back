@@ -7,4 +7,5 @@ import lombok.NonNull;
 @Data @Builder
 public class AuthResponse {
     @NonNull private String token;
+    @NonNull private Integer id;
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,11 +30,15 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "event_seq")
     private Long id;
 
-    private String title, location, host, shorDescription, fullDescription;
+    private String title, location, host, shorDescription;
+    
+    @Column(length = 1024)
+    private String fullDescription;
 
     private LocalDateTime dateTime;
 
-    //@Lob
+    @Lob
+    @Column(columnDefinition = "text")
     private String imageData;
 
     @JsonIgnore 
