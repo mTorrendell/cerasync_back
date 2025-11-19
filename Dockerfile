@@ -23,5 +23,5 @@ RUN ./mvnw clean package -DskipTests
 # Expose port (Render will set this via $PORT)
 EXPOSE 8080
 
-# Run the application
-CMD ["java", "-Dserver.port=${PORT}", "-jar", "target/cerasync_back-0.0.1-SNAPSHOT.jar"]
+# Use shell form to allow variable expansion
+CMD java -Dserver.port=$PORT -jar target/cerasync_back-0.0.1-SNAPSHOT.jar
