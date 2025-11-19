@@ -12,16 +12,16 @@ COPY mvnw pom.xml ./
 RUN chmod +x ./mvnw
 
 # Download dependencies (this layer will be cached)
-RUN ./mvnw dependency:go-offline
+RUN ./mvnw dependency:go-offline -DskipTests
 
 # Copy source code
 COPY src ./src
 
-# Build the application
+# Build the application (skip tests to avoid needing database during build)
 RUN ./mvnw clean package -DskipTests
 
 # Expose port (Render will set this via $PORT)
 EXPOSE 8080
 
 # Run the application
-CMD ["java", "-jar", "target/cerasync_back-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-Dserver.port=${PORT}", "-jar", "target/cerasync_back-0.0.1-SNAPSHOT.jar"]
